@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banana Clicker</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+<style>
+  body {
+   body {
+    background: url("https://i.imgur.com/9Q9QZ4F.png");
+    background-size: 180px;
+    background-repeat: repeat;
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+}
+<style>
+    body {
+        background: linear-gradient(180deg, #fff7c2, #ffe27a);
+        font-family: 'Fredoka One', cursive;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    z-index: -1;
+}
+
+    #container {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        margin-top: 40px;
+    }
+
+    #main {
+        text-align: center;
+    }
+
+    #shop {
+        background: #fffbe6;
+        padding: 20px;
+        border-radius: 15px;
+        width: 220px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        border: 3px solid #ffdd57;
+    }
+
+    #shop h2 {
+        margin-top: 0;
+        color: #d4a200;
+        font-size: 24px;
+    }
+
+    button {
+        padding: 12px 20px;
+        margin: 10px 0;
+        font-size: 16px;
+        cursor: pointer;
+        background: #ffdd57;
+        border: 3px solid #d4a200;
+        border-radius: 10px;
+        transition: 0.15s;
+    }
+
+    button:hover {
+        background: #ffe88a;
+        transform: scale(1.05);
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    #banana {
+        cursor: pointer;
+        transition: transform 0.1s, filter 0.2s;
+    }
+
+    #banana:hover {
+        transform: scale(1.05);
+        filter: brightness(1.1);
+    }
+
+    #banana:active {
+        transform: scale(0.9);
+    }
+
+    #score {
+        font-size: 28px;
+        color: #d4a200;
+        margin-bottom: 20px;
+    }
+#header {
+    background: #ffdd57;
+    border-bottom: 4px solid #d4a200;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+#header h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #a67c00;
+}
+
+#topScore {
+    margin: 5px 0 0;
+    font-size: 20px;
+    color: #a67c00;
+}
+
+</style>
+</head>
+<body>
+<div id="overlay"></div>
+
+<div id="header">
+    <h1>🍌 Banana Clicker</h1>
+    <p id="topScore">Bananas: 0</p>
+</div>
+
+<div id="container">
+    <div id="main">
+        <h1>Banana Clicker</h1>
+        <p id="score">Bananas: 0</p>
+        <img id="banana" src="banana.png" width="200">
+        <p id="bpc">Bananas per click: 1</p>
+        <p id="acCount">Auto‑Clickers: 0</p>
+    </div>
+
+    <div id="shop">
+        <h2>Shop</h2>
+        <button id="upgrade">Buy Upgrade (Cost: 10)</button>
+        <button id="autoclicker">Buy Auto‑Clicker (Cost: 50)</button>
+    </div>
+</div>
+<script>
+    let score = 0;
+// Load saved game
+if (localStorage.getItem("score")) {
+    score = parseInt(localStorage.getItem("score"));
+    bananasPerClick = parseInt(localStorage.getItem("bananasPerClick"));
+    autoClickers = parseInt(localStorage.getItem("autoClickers"));
+
+    document.getElementById("score").textContent = "Bananas: " + score;
+    document.getElementById("topScore").textContent = "Bananas: " + score;
+    document.getElementById("bpc").textContent = "Bananas per click: " + bananasPerClick;
+    document.getElementById("acCount").textContent = "Auto‑Clickers: " + autoClickers;
+}
+
+    let bananasPerClick = 1;
+    let autoClickers = 0;
+
+    document.getElementById("banana").onclick = function() {
+        score += bananasPerClick;
+        document.getElementById("score").textContent = "Bananas: " + score;
+    };
+
+    document.getElementById("upgrade").onclick = function() {
+        if (score >= 10) {
+            score -= 10;
+            bananasPerClick++;
+            document.getElementById("score").textContent = "Bananas: " + score;
+            document.getElementById("bpc").textContent = "Bananas per click: " + bananasPerClick;
+        }
+    };
+
+    document.getElementById("autoclicker").onclick = function() {
+        if (score >= 50) {
+            score -= 50;
+            autoClickers++;
+          document.getElementById("score").textContent = "Bananas: " + score;
+document.getElementById("topScore").textContent = "Bananas: " + score;
+            document.getElementById("acCount").textContent = "Auto‑Clickers: " + autoClickers;
+        }
+    };
+
+    // Auto‑clicker loop
+    setInterval(function() {
+        if (autoClickers > 0) {
+            score += autoClickers;
+            document.getElementById("score").textContent = "Bananas: " + score;
+        }
+    }, 1000);
+// Save game every second
+setInterval(function() {
+    localStorage.setItem("score", score);
+    localStorage.setItem("bananasPerClick", bananasPerClick);
+    localStorage.setItem("autoClickers", autoClickers);
+}, 1000);
+
+</script>
+    
+</body>
+</html>
